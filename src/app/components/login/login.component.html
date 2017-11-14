@@ -1,3 +1,25 @@
-<h1>Login</h1>
-
-<p>{{test}}</p>
+<div class="row">
+    <div class="col-md-4">
+      <h1>Login</h1>
+      <hr><br>
+      <form [formGroup]="form">
+        <fieldset>
+            <legend>Login</legend>
+            <div class="form-field">
+                <label>Email:</label>
+                <input name="email" formControlName="email">
+            </div>
+            <div class="form-field">
+                <label>Password:</label>
+                <input name="password" formControlName="password" 
+                       type="password">
+            </div>
+        </fieldset>
+        <div class="form-buttons">
+            <button class="button button-primary" 
+                    (click)="login()">Login</button>
+        </div>
+    </form>
+    </div>
+  </div>
+  
