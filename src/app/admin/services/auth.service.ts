@@ -10,9 +10,12 @@ import 'rxjs/add/operator/shareReplay';
 @Injectable()
 export class AuthService {
 
-  private BASE_URL: string = 'http://127.0.0.1:5555/api/v1/auth';
+  public BASE_URL: string = 'http://127.0.0.1:5555/api/v1/auth';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    //no me funciona como singleton
+    //localStorage.clear();
+  }
 
   test(): string {
     return 'working routing';
@@ -20,21 +23,35 @@ export class AuthService {
 
   login(email:string, password:string ) {
 
+    this.logout();
     let url: string = `${this.BASE_URL}/login/`;
     return this.http.post(url, {email, password})
-      .do(res => this.setSession)
+      .do(res => this.setSession(res))
       .shareReplay()
   } 
 
   private setSession(authResult) {
-
-    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('id_token', authResult.token);
   } 
 
-  public getToken():string {
+ public getToken():string {
     return localStorage.getItem('id_token');
   }
 
+  public isLogged():boolean {
+    if (localStorage.getItem('id_token')){ return true };
+  }
+
+  public logout(){
+    localStorage.removeItem('id_token');
+  }
+
+  public refreshToken(){
+    const body = { token: this.getToken() };
+    let url: string = `${this.BASE_URL}/token-refresh/`;
+    return this.http.post(url, body)
+    .do(res => this.setSession(res))
+  }
 
   login2(user) {
     

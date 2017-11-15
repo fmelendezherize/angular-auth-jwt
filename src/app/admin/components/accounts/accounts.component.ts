@@ -27,7 +27,7 @@ export class AccountsComponent implements OnInit {
         } else {
           // The backend returned an unsuccessful response code.
           // The response body may contain clues as to what went wrong,
-          console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+          console.log(`Backend returned code ${err.status}, body was: ${err.error.detail}`);
         }
       }
     )

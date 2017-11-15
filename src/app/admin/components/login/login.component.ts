@@ -9,7 +9,7 @@ import { User } from '../../models/user'
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class LoginComponent implements OnInit {
 
@@ -44,12 +44,12 @@ export class LoginComponent implements OnInit {
 
     if (val.email && val.password) {
         this.auth.login(val.email, val.password)
-            .subscribe();
-            //     () => {
-            //         console.log("User is logged in");
-            //         this.router.navigateByUrl('/');
-            //     }
-            // );
+            .subscribe(
+                () => {
+                    console.log("User is logged in");
+                    this.router.navigateByUrl('/');
+                }
+            );
     }
   }
 }
