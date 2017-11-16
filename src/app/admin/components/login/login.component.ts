@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
                     console.log("User is logged in");
                     this.router.navigateByUrl('/');
                 }
-            );
+            )
     }
   }
 }

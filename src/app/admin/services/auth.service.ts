@@ -6,6 +6,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +32,7 @@ export class AuthService {
   } 
 
   private setSession(authResult) {
+    console.log("Session Set");
     localStorage.setItem('id_token', authResult.token);
   } 
 
@@ -39,7 +41,11 @@ export class AuthService {
   }
 
   public isLogged():boolean {
-    if (localStorage.getItem('id_token')){ return true };
+    if (localStorage.getItem('id_token'))
+    { 
+      return true 
+    };
+    return false;
   }
 
   public logout(){
@@ -47,10 +53,14 @@ export class AuthService {
   }
 
   public refreshToken(){
+    console.log("Refreshing Token");
     const body = { token: this.getToken() };
     let url: string = `${this.BASE_URL}/token-refresh/`;
-    return this.http.post(url, body)
-    .do(res => this.setSession(res))
+    return this.http.post(url, body).subscribe(
+      (res) => {
+        res => this.setSession(res)
+      }
+    )
   }
 
   login2(user) {

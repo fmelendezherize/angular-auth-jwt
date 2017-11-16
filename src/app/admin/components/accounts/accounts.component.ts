@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
+import { Observable } from 'rxjs/Observable'
+import 'rxjs/add/observable/throw'
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
