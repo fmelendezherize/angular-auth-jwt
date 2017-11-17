@@ -23,6 +23,10 @@ export class TokenInterceptor implements HttpInterceptor {
     
     const authService = this.inj.get(AuthService);
 
+    if (request.url == `${authService.BASE_URL}/token-refresh/`){
+      return next.handle(request);  
+    }
+
     authService.refreshToken();
 
     if (authService.isLogged()){

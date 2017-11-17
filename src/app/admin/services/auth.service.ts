@@ -32,8 +32,9 @@ export class AuthService {
   } 
 
   private setSession(authResult) {
-    console.log("Session Set");
+    console.log("Old Token: " + localStorage.getItem('id_token'));
     localStorage.setItem('id_token', authResult.token);
+    console.log("New Token: " + localStorage.getItem('id_token'));
   } 
 
  public getToken():string {
@@ -57,8 +58,8 @@ export class AuthService {
     const body = { token: this.getToken() };
     let url: string = `${this.BASE_URL}/token-refresh/`;
     return this.http.post(url, body).subscribe(
-      (res) => {
-        res => this.setSession(res)
+      res => {
+        this.setSession(res)
       }
     )
   }
